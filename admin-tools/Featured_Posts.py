@@ -1,5 +1,5 @@
 import pandas as pd
-from pandas.io.json import json_normalize #package for flattening json in pandas df
+from pandas import json_normalize #package for flattening json in pandas df
 import streamlit as st
 from datetime import datetime, date
 import json
