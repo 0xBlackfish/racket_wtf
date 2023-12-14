@@ -1,2 +1,3 @@
 pandas>=1.3.3
+pandas.io.json >=1.3.3
 streamlit>=1.0.0
