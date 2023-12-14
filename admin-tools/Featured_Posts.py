@@ -6,10 +6,6 @@ import json
 import requests
 import hmac
 
-
-st.secrets['featured_endpoint']
-
-
 st.set_page_config(page_title='Racket Admin Tools',layout='wide')
 
 st.title('Racket Admin Tools')
