@@ -6,6 +6,10 @@ import json
 import requests
 import hmac
 
+
+st.secrets['featured_endpoint']
+
+
 st.set_page_config(page_title='Racket Admin Tools',layout='wide')
 
 st.title('Racket Admin Tools')
@@ -47,7 +51,8 @@ st.write(' ')
 st.write(' ')
 
 # Get the current posts on the campaign board
-response = requests.get('https://racket.wtf/api/reportPromotedEvents?key=56473a28-431b-40c0-9cb7-ee413418e641')
+response = requests.get('')
+response = requests.get(st.secrets['campaigns_endpoint'])
 json_response = response.json()
 
 df = pd.json_normalize(json_response)
@@ -113,7 +118,7 @@ st.write(' ')
 st.subheader('Promote Post')
 
 def feature_post(campaign_id):
-    requests.post('https://racket.wtf/api/updatePromotedEvent?key=56473a28-431b-40c0-9cb7-ee413418e641&featured=true&eventId={}'.format(campaign_id))
+    requests.post(st.secrets['featured_endpoint'] + campaign_id)
 
 button, space1, space2, space3, space4, space5, space6, space7 = st.columns(8)
 
