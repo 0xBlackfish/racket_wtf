@@ -102,11 +102,6 @@ st.write(' ')
 
 df_display = df_filtered[['campaign_id','campaign_type','bid_price','desired_engagements','bid_total','bid_total_unsettled','promoted_tweet','promoted_account_username','created_by_username']]
 
-st.dataframe(df_display,use_container_width=True)
-
-st.write(' ')
-st.write(' ')
-
 
 def dataframe_with_selections(df):
     df_with_selections = df.copy()
