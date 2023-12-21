@@ -117,9 +117,9 @@ def dataframe_with_selections(df):
     )
 
     # Filter the dataframe using the temporary column, then drop the column
-    #selected_rows = edited_df[edited_df.Select]
+    selected_rows = edited_df[edited_df.Select]
     
-    return edited_df.drop('Select', axis=1)
+    return selected_rows.drop('Select', axis=1)
 
 
 selection = dataframe_with_selections(df_display)
