@@ -102,45 +102,24 @@ st.write(' ')
 
 df_display = df_filtered[['campaign_id','campaign_type','bid_price','desired_engagements','bid_total','bid_total_unsettled','promoted_tweet','promoted_account_username','created_by_username']]
 
+st.dataframe(df_display,use_container_width=True)
 
-def dataframe_with_selections(df):
-    df_with_selections = df.copy()
-    df_with_selections.insert(0, "Select", False)
-
-    # Get dataframe row-selections from user with st.data_editor
-    edited_df = st.data_editor(
-        df_with_selections,
-        hide_index=True,
-        column_config={"Select": st.column_config.CheckboxColumn(required=True)},
-        disabled=df.columns,
-        use_container_width=True
-    )
-
-    # Filter the dataframe using the temporary column, then drop the column
-    selected_rows = edited_df[edited_df.Select]
-    
-    return selected_rows.drop('Select', axis=1)
-
-
-selection = dataframe_with_selections(df_display)
 st.write(' ')
 st.write(' ')
 
-st.subheader('Campaigns to Cancel')
-st.write(' ')
-st.write(' ')
-st.write(selection)
+st.subheader('Cancel Campaigns')
+st.write('Enter a comma separated list of Campaign IDs to cancel them.')
 
-# Create a single string of campaign ids to cancel concatenated with ampersands
-list_campaign_ids_to_cancel = selection['campaign_id'].tolist()
-campaign_ids_to_cancel = '&'.join(list_campaign_ids_to_cancel)
+def cancel_campaigns(campaign_ids):
 
+    # Concatenate the campaign IDs into a string using ampersands
+    processed_list_of_campaign_ids = [x.strip(' ') for x in campaign_ids.split(',')]
+    campaign_ids_string = '&'.join(processed_list_of_campaign_ids)
 
+    requests.post(st.secrets['cancel_endpoint'] + campaign_ids)
 
-def cancel_campaign(campaign_ids_to_cancel):
-    requests.post(st.secrets['cancel_endpoint'] + campaign_ids_to_cancel)
-
-button, space1, space2, space3, space4, space5, space6 = st.columns(7)
+button, space1 = st.columns(2)
 
 with button:
-    st.button('Cancel Campaign(s)', on_click=cancel_campaign(campaign_ids_to_cancel),use_container_width=True)
+    campaign_ids = st.text_area('Campaign IDs',placeholder='Campaign IDs')
+    st.button('Cancel Campaigns', on_click=cancel_campaigns(campaign_ids),use_container_width=True)
