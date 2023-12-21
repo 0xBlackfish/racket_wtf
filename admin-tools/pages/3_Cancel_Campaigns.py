@@ -124,5 +124,5 @@ def dataframe_with_selections(df):
 
 selection = dataframe_with_selections(df_display)
 
-# st.write("Your selection:")
-# st.write(selection)
+st.write("Your selection:")
+st.write(selection['campaign_id'].tolist())
