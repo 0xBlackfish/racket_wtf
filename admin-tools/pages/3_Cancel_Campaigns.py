@@ -124,5 +124,9 @@ def dataframe_with_selections(df):
 
 selection = dataframe_with_selections(df_display)
 
-st.write("Your selection:")
-st.write(selection['campaign_id'].tolist())
+list_campaign_ids_to_cancel = selection['campaign_id'].tolist()
+
+# Create a single string of campaign ids to cancel concatenated with ampersands
+campaign_ids_to_cancel = '&'.join(list_campaign_ids_to_cancel)
+
+st.write(campaign_ids_to_cancel)
