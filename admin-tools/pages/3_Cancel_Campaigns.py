@@ -122,7 +122,7 @@ def dataframe_with_selections(df):
     return selected_rows.drop('Select', axis=1)
 
 
-# selection = dataframe_with_selections(df_display)
+selection = dataframe_with_selections(df_display)
 
 # st.write("Your selection:")
 # st.write(selection)
