@@ -113,6 +113,7 @@ def dataframe_with_selections(df):
         hide_index=True,
         column_config={"Select": st.column_config.CheckboxColumn(required=True)},
         disabled=df.columns,
+        use_container_width=True
     )
 
     # Filter the dataframe using the temporary column, then drop the column
@@ -121,7 +122,7 @@ def dataframe_with_selections(df):
     return selected_rows.drop('Select', axis=1)
 
 
-selection = dataframe_with_selections(df_display)
+# selection = dataframe_with_selections(df_display)
 
-st.write("Your selection:")
-st.write(selection)
+# st.write("Your selection:")
+# st.write(selection)
