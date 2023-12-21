@@ -122,11 +122,23 @@ def dataframe_with_selections(df):
     return selected_rows.drop('Select', axis=1)
 
 
-selection = dataframe_with_selections(df_display)
+st.subheader('Cancel Campaign(s)')
+st.write(' ')
+st.write(' ')
 
-list_campaign_ids_to_cancel = selection['campaign_id'].tolist()
+selection = dataframe_with_selections(df_display)
+st.write(selection)
 
 # Create a single string of campaign ids to cancel concatenated with ampersands
+list_campaign_ids_to_cancel = selection['campaign_id'].tolist()
 campaign_ids_to_cancel = '&'.join(list_campaign_ids_to_cancel)
 
-st.write(campaign_ids_to_cancel)
+
+
+def cancel_campaign(campaign_ids_to_cancel):
+    requests.post(st.secrets['cancel_endpoint'] + campaign_ids_to_cancel)
+
+button, space1, space2, space3, space4, space5, space6, space7 = st.columns(8)
+
+with button:
+    st.button('Cancel Campaign(s)', on_click=cancel_campaign(campaign_ids_to_cancel),use_container_width=True)
