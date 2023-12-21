@@ -129,7 +129,7 @@ st.write(' ')
 st.subheader('Campaigns to Cancel')
 st.write(' ')
 st.write(' ')
-st.write(selection)
+st.dataframe(selection,use_container_width=True)
 
 # Create a single string of campaign ids to cancel concatenated with ampersands
 list_campaign_ids_to_cancel = selection['campaign_id'].tolist()
