@@ -44,6 +44,8 @@ st.subheader('Current Posts on Campaign Board')
 st.write(' ')
 st.write(' ')
 
+# Get the current posts on the campaign board
+response = requests.get(st.secrets['campaigns_endpoint'])
 json_response = response.json()
 
 df = pd.json_normalize(json_response)
