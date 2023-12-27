@@ -46,7 +46,7 @@ st.write(' ')
 
 
 # Get the current list of Racket users
-response = requests.get(st.secrets['users_endpoint'])
+response = requests.get(st.secrets["users_endpoint"])
 json_response = response.json()
 
 df = pd.json_normalize(json_response)
