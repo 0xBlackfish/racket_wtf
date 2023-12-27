@@ -152,6 +152,7 @@ st.write(' ')
 df_display = df_filtered[['campaign_id','campaign_type','bid_price','desired_engagements','bid_total','bid_total_unsettled','promoted_tweet','promoted_account_username','created_by_username']]
 
 st.dataframe(df_display,use_container_width=True)
+response1 = requests.get(st.secrets['users_endpoint'])
 
 st.write(' ')
 st.write(' ')
