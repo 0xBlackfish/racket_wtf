@@ -8,6 +8,14 @@ racket_user_api_key = os.environ.get('RACKET_USER_API_KEY')
 tweetscout_api_key = os.environ.get('TWEETSCOUT_API_KEY')
 
 
+# Determine the current datetime
+now = datetime.now()
+
+
+# Convert the current datetime into a string
+now_string = now.strftime("%Y-%m-%dT%H-%M-%S")
+
+
 # Function to score users via Tweetscout API
 def score_users(username):
 
@@ -39,10 +47,13 @@ racket_user_report_json_response = racket_user_report_response.json()
 # Read this json into a pandas dataframe
 df_racket_users = pd.json_normalize(racket_user_report_json_response)
 
+# Filter out users who are already suspended
+df_racket_users_filtered = df_racket_users[~df_racket_users['suspended']]
+
 
 # Create a new column in the dataframe with the Tweetscout score
-df_racket_users['tweetscout_score'] = df_racket_users['username'].apply(score_users)
+df_racket_users_filtered['tweetscout_score'] = df_racket_users_filtered['username'].apply(score_users)
 
 
 # Export the dataframe to a CSV
-df_racket_users.to_csv('racket_users.csv', index=False)
+df_racket_users_filtered.to_csv('{}-racket_users.csv'.format(now_string), index=False)
