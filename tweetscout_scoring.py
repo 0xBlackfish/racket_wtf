@@ -48,7 +48,7 @@ racket_user_report_json_response = racket_user_report_response.json()
 df_racket_users = pd.json_normalize(racket_user_report_json_response)
 
 # Filter out users who are already suspended
-df_racket_users_filtered = df_racket_users[~df_racket_users['suspended']]
+df_racket_users_filtered = df_racket_users[~df_racket_users['suspend']]
 
 
 # Create a new column in the dataframe with the Tweetscout score
