@@ -102,18 +102,23 @@ st.write(' ')
 st.subheader('Change Account Status')
 st.write('Enter a comma separated list of Twitter usernames to suspend or reinstate them.')
 
-def change_account_status(account_change, twitter_usernames):
+def change_account_status(account_change, twitter_usernames, skip_suspend_checks='false'):
 
     # Concatenate the twitter usernames into a string using commas
     processed_list_of_twitter_usernames = [x.strip(' ') for x in twitter_usernames.split(',')]
     twitter_usernames_string = '&'.join(processed_list_of_twitter_usernames)
 
+    account_status_endpoint = st.secrets['account_status_endpoint'] + twitter_usernames_string
+
     if account_change == 'Suspend':
-        requests.post(st.secrets['suspend_endpoint'] + twitter_usernames_string)
-        print(st.secrets['suspend_endpoint'] + twitter_usernames_string)
-    elif account_change == 'Reinstate':
-        requests.post(st.secrets['reinstate_endpoint'] + twitter_usernames_string)
-        print(st.secrets['reinstate_endpoint'] + twitter_usernames_string)
+        requests.post(account_status_endpoint.format(api_key, 'true', skip_suspend_checks))
+        print(account_status_endpoint.format(api_key, 'true', skip_suspend_checks))
+    elif account_change == 'Reinstate' and not skip_suspend_checks:
+        requests.post(account_status_endpoint.format(api_key, 'false', skip_suspend_checks))
+        print(account_status_endpoint.format(api_key, 'false', skip_suspend_checks))
+    elif account_change == 'Reinstate' and skip_suspend_checks:
+        requests.post(account_status_endpoint.format(api_key, 'false', 'true'))
+        print(account_status_endpoint.format(api_key, 'false', 'true'))
     else:
         st.error('This is an error', icon="🚨")
 
@@ -125,6 +130,9 @@ with buttons:
     twitter_usernames = st.text_area('Twitter Usernames',placeholder='')
 
     account_change = st.selectbox('Account Change', options=['Suspend', 'Reinstate'], index=None)
+
+    if account_change == 'Reinstate':
+        skip_suspend_checks = st.checkbox('Skip Suspend Checks', value=False)
 
     st.write(' ')
     st.button('Update Account Status', on_click=change_account_status, args=(account_change, twitter_usernames),use_container_width=True)
