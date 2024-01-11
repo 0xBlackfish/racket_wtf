@@ -44,9 +44,11 @@ st.subheader('Current Users of Racket')
 st.write(' ')
 st.write(' ')
 
+# Get api key
+api_key = st.secrets['api_key']
 
 # Get the current list of Racket users
-response = requests.get(st.secrets['users_endpoint'])
+response = requests.get("https://racket.wtf/api/reportUsers?key={}".format(api_key))
 json_response = response.json()
 
 df = pd.json_normalize(json_response)
